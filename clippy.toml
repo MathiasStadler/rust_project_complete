@@ -1,0 +1,76 @@
+# Clippy-Konfiguration#!/bin/bash
+# Rust-Projekt Setup mit 100% Coverage
+# Vollständige Projektinitialisierung
+
+set -e  # Exit on error
+
+PROJECT_NAME="rust_project_complete"
+CURRENT_DIR=$(pwd)
+PROJECT_DIR="$CURRENT_DIR/$PROJECT_NAME"
+
+echo "🚀 Rust-Projekt Setup mit 100% Testabdeckung"
+echo "================================================"
+
+# Überprüfe Rust Installation
+if ! command -v rustc &> /dev/null; then
+    echo "❌ Rust ist nicht installiert. Installiere Rust von https://rustup.rs/"
+    exit 1
+fi
+
+echo "✅ Rust Version: $(rustc --version)"
+
+# Erstelle Projekt
+echo "📁 Erstelle Projekt: $PROJECT_NAME"
+cargo new $PROJECT_NAME --lib
+cd $PROJECT_NAME
+
+# Erstelle Projektstruktur
+echo "🏗️  Erstelle Projektstruktur..."
+mkdir -p src/modules src/bin tests/common benches examples docs .github/workflows
+
+# Cargo.toml
+cat > Cargo.toml << 'EOF'
+[package]
+name = "rust_project_complete"
+version = "0.1.0"
+edition = "2021"
+authors = ["Your Name <your.email@example.com>"]
+description = "Ein vollständiges Rust-Projekt mit 100% Testabdeckung"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/yourusername/rust_project_complete"
+documentation = "https://docs.rs/rust_project_complete"
+readme = "README.md"
+keywords = ["rust", "testing", "coverage", "example"]
+categories = ["development-tools"]
+
+[dependencies]
+serde = { version = "1.0", features = ["derive"] }
+tokio = { version = "1.0", features = ["full"] }
+anyhow = "1.0"
+thiserror = "1.0"
+log = "0.4"
+env_logger = "0.10"
+clap = { version = "4.0", features = ["derive"] }
+uuid = { version = "1.0", features = ["v4"] }
+
+[dev-dependencies]
+proptest = "1.0"
+criterion = "0.5"
+mockall = "0.11"
+rstest = "0.18"
+test-case = "3.0"
+serial_test = "3.0"
+tempfile = "3.0"
+
+[[bench]]
+name = "benchmarks"
+harness = false
+
+[profile.release]
+lto = true
+codegen-units = 1
+panic = "abort"
+
+[profile.test]
+opt-level = 0
+debug = true
