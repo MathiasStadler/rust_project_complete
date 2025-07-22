@@ -18,6 +18,7 @@ Ein vollständiges Rust-Projekt mit 100% Testabdeckung, das als Best Practice Be
 git clone https://github.com/yourusername/rust_project_complete.git
 cd rust_project_complete
 cargo build --release
+
 ```
 
 ## Verwendung
